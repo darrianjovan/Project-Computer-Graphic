@@ -15,30 +15,61 @@
    <body>
        <canvas id="canvas"></canvas>
       <script>
- ar canvas = document.getElementById("canvas");
+
  
 // Check support
 if (!BABYLON.Engine.isSupported()) {
     window.alert('Browser not supported');
-} else {
-    // Babylon
-    var engine = new BABYLON.Engine(canvas, true);
- 
-    var scene = new BABYLON.Scene(engine);
-    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, new BABYLON.Vector3.Zero(), scene);
- 
-    camera.attachControl(canvas);
- 
-  BABYLON.SceneLoader.Load("/Assets/", "char.obj", engine, function (newScene) { 
-   var loader = new BABYLON.AssetsManager(scene);
-var char = loader.addMeshTask("char", "", "Assets/", "char.obj");
+} else {  
+            var canvas = document.getElementById("canvas");
+              var engine = new BABYLON.Engine(canvas, true);
+          
+          
+         
+          
+          var scene = new BABYLON.Scene(engine);
+    
+
+    var assetsManager = new BABYLON.AssetsManager(scene);
+        var meshTask = assetsManager.addMeshTask("char", "", "Assets/", "char.obj");
+        engine.loadingUIText = "Your Patience is really appreciated";
+     
+          
+          meshTask.onSuccess=function(task){
+               task.loadedMeshes[0].position = new BABYLON.Vector3(0, 10, 0);
+          }
+   
+    
+  
+        
+          var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 0, BABYLON.Vector3.Zero(), scene);
+          camera.setPosition(new BABYLON.Vector3(0,15,-10));
+          camera.attachControl(canvas, false);
+          
+          var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+          light.intensity=0.7;
+              
+            var ground= BABYLON.Mesh.CreateGround("ground1",12,12,2,scene);
+            var matGround=new BABYLON.StandardMaterial("ground1",scene);
+              matGround.diffuseTexture=new BABYLON.Texture("grass.jpg",scene);
+              ground.material=matGround;
+              
+    
+             BABYLON.SceneLoader.ImportMesh("","Assets/", "char.obj", scene, function(newMeshes){
+                 var bone = BABYLON.Mesh.CreateBox("box1",2,scene);
+                 bone.visibility = 0;
+                 newMeshes.parent  = bone;
 });
- 
- 
+        
+   
+      assetsManager.load(); 
+
+    }
+    
               
               /*SCENE END*/
               
-              /* Keyboard event start */
+              /* Keyboard event start 
               window.onkeydown=function(event){
                   event=event || window.event;
                   var keyCode=event.which ||event.keyCode;
@@ -58,25 +89,71 @@ var char = loader.addMeshTask("char", "", "Assets/", "char.obj");
                   case 68:
                       head.position.x +=0.05;
                       break;
-                  case 90:
-                      head.position.y +=0.5;
-                     setInterval(function(){head.position.y = 1.357},500);
-                      
-                      break;
+                 
               }
-              };
+              }; */
+              
+        /*      engine.runRenderLoop(function(){
+                
+                  scene.render();
+              })
+          
+             
+              
+          var renderLoop = function () {
+                    scene.render();
+                    };
+                    engine.runRenderLoop(renderLoop);
+          
+                    var alpha = 0;
+                    knot.scaling.y = 1.5;
+          
+                    scene.beforeRender = function() {
+                    knot.rotation.y = alpha;
+                      
+                    alpha += 0.03;
+         
+                    }; */
+
+
+ 
+/*  
+ 
+              
+              /*SCENE END*/
+              
+              /* Keyboard event start 
+              window.onkeydown=function(event){
+                  event=event || window.event;
+                  var keyCode=event.which ||event.keyCode; */
+            
+    /*          
+              switch(keyCode){
+                  case 87 :
+                      head.position.z+=0.05;
+                      break;
+                      
+                  case 65:
+                      head.position.x-=0.05;
+                      break;
+                  case 83:
+                      head.position.z -=0.05;
+                      break;
+                  case 68:
+                      head.position.x +=0.05;
+                      break;
+   
+              }; */
+                  
               
                // Once the scene is created, just register a render loop to render it
-    engine.runRenderLoop(function () {
-        scene.render();
-    });
+   
     
-       // Resize
+    /* // Resize
     window.addEventListener("resize", function () {
         engine.resize();
-    });
-}
-          }
+    }); */
+    
       </script>
    </body>
 </html>
