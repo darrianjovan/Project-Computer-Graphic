@@ -1,0 +1,82 @@
+<html>
+   <head>
+      <title>Armo</title>
+      <script src= "babylon.js"></script>
+       <script src="babylonObjLoader.js"></script>
+     <style>
+         html, body, div, canvas {
+         width: 100%;
+         height: 100%;
+         padding: 0;
+         margin: 0;
+         }
+      </style>
+   </head>
+   <body>
+       <canvas id="canvas"></canvas>
+      <script>
+ ar canvas = document.getElementById("canvas");
+ 
+// Check support
+if (!BABYLON.Engine.isSupported()) {
+    window.alert('Browser not supported');
+} else {
+    // Babylon
+    var engine = new BABYLON.Engine(canvas, true);
+ 
+    var scene = new BABYLON.Scene(engine);
+    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, new BABYLON.Vector3.Zero(), scene);
+ 
+    camera.attachControl(canvas);
+ 
+  BABYLON.SceneLoader.Load("/Assets/", "char.obj", engine, function (newScene) { 
+   var loader = new BABYLON.AssetsManager(scene);
+var char = loader.addMeshTask("char", "", "Assets/", "char.obj");
+});
+ 
+ 
+              
+              /*SCENE END*/
+              
+              /* Keyboard event start */
+              window.onkeydown=function(event){
+                  event=event || window.event;
+                  var keyCode=event.which ||event.keyCode;
+            
+              
+              switch(keyCode){
+                  case 87 :
+                      head.position.z+=0.05;
+                      break;
+                      
+                  case 65:
+                      head.position.x-=0.05;
+                      break;
+                  case 83:
+                      head.position.z -=0.05;
+                      break;
+                  case 68:
+                      head.position.x +=0.05;
+                      break;
+                  case 90:
+                      head.position.y +=0.5;
+                     setInterval(function(){head.position.y = 1.357},500);
+                      
+                      break;
+              }
+              };
+              
+               // Once the scene is created, just register a render loop to render it
+    engine.runRenderLoop(function () {
+        scene.render();
+    });
+    
+       // Resize
+    window.addEventListener("resize", function () {
+        engine.resize();
+    });
+}
+          }
+      </script>
+   </body>
+</html>
