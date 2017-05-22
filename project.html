@@ -13,7 +13,7 @@
       </style>
    </head>
    <body>
-       <canvas id="canvas"></canvas>
+       <canvas width="1920" height="1080" id="canvas"></canvas>
       <script>
 
  
@@ -25,17 +25,9 @@ if (!BABYLON.Engine.isSupported()) {
               var engine = new BABYLON.Engine(canvas, true);
           
           
-         
+         //scene setup
           
           var scene = new BABYLON.Scene(engine);
-    
-
-     
-                
-        
-   
-    
-  
         
           var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 0, BABYLON.Vector3.Zero(), scene);
           camera.setPosition(new BABYLON.Vector3(0,15,-10));
@@ -44,19 +36,22 @@ if (!BABYLON.Engine.isSupported()) {
           var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
           light.intensity=0.7;
               
-            var ground= BABYLON.Mesh.CreateGround("ground1",12,12,2,scene);
+            var ground= BABYLON.Mesh.CreateGround("ground1",100,100,2,scene);
             var matGround=new BABYLON.StandardMaterial("ground1",scene);
               matGround.diffuseTexture=new BABYLON.Texture("grass.jpg",scene);
               ground.material=matGround;
     
-    BABYLON.SceneLoader.ImportMesh("","", "char.obj", scene, function(newMeshes){
+    //Import Object
+    BABYLON.SceneLoader.ImportMesh("","Assets/", "char.babylon", scene, function(newMeshes){
                  var bone = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
-                 bone.visibility = 1;
+                 bone.visibility = 0;
                  newMeshes.parent  = bone;
+                
 });
      
+    
               
-      //      assetsManager.onFinish = function(tasks) {
+          //  assetsManager.onFinish = function(tasks) {
 
     engine.runRenderLoop(function() {
         scene.render();
@@ -64,11 +59,11 @@ if (!BABYLON.Engine.isSupported()) {
 
           
    
-      assetsManager.load(); 
+     assetsManager.load(); 
 
     }
     
-              
+
               /*SCENE END*/
               
               /* Keyboard event start 
