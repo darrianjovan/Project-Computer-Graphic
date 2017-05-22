@@ -41,11 +41,19 @@ if (!BABYLON.Engine.isSupported()) {
               matGround.diffuseTexture=new BABYLON.Texture("grass.jpg",scene);
               ground.material=matGround;
     
-    //Import Object
+    //Import Main Character
     BABYLON.SceneLoader.ImportMesh("","Assets/", "char.babylon", scene, function(newMeshes){
                  var bone = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
                  bone.visibility = 0;
                  newMeshes.parent  = bone;
+                
+});
+    //Import Enemy
+    BABYLON.SceneLoader.ImportMesh("","Assets/", "enemy.babylon", scene, function(newMeshes){
+                 var bone1 = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
+                 bone1.visibility = 0;
+                 newMeshes.parent  = bone1;
+                newMeshes[0].position =new BABYLON.Vector3(10,3,10);
                 
 });
      
