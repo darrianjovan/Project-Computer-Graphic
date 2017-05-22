@@ -30,14 +30,9 @@ if (!BABYLON.Engine.isSupported()) {
           var scene = new BABYLON.Scene(engine);
     
 
-    var assetsManager = new BABYLON.AssetsManager(scene);
-        var meshTask = assetsManager.addMeshTask("char", "", "Assets/", "char.obj");
-        engine.loadingUIText = "Your Patience is really appreciated";
      
-          
-          meshTask.onSuccess=function(task){
-               task.loadedMeshes[0].position = new BABYLON.Vector3(0, 10, 0);
-          }
+                
+        
    
     
   
@@ -53,14 +48,21 @@ if (!BABYLON.Engine.isSupported()) {
             var matGround=new BABYLON.StandardMaterial("ground1",scene);
               matGround.diffuseTexture=new BABYLON.Texture("grass.jpg",scene);
               ground.material=matGround;
-              
     
-             BABYLON.SceneLoader.ImportMesh("","Assets/", "char.obj", scene, function(newMeshes){
-                 var bone = BABYLON.Mesh.CreateBox("box1",2,scene);
-                 bone.visibility = 0;
+    BABYLON.SceneLoader.ImportMesh("","", "char.obj", scene, function(newMeshes){
+                 var bone = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
+                 bone.visibility = 1;
                  newMeshes.parent  = bone;
 });
-        
+     
+              
+      //      assetsManager.onFinish = function(tasks) {
+
+    engine.runRenderLoop(function() {
+        scene.render();
+    });
+
+          
    
       assetsManager.load(); 
 
