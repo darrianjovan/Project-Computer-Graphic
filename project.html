@@ -42,24 +42,37 @@ if (!BABYLON.Engine.isSupported()) {
               ground.material=matGround;
     
     //Import Main Character
-    BABYLON.SceneLoader.ImportMesh("","Assets/", "char.babylon", scene, function(newMeshes){
+    BABYLON.SceneLoader.ImportMesh("","Assets/", "char.babylon", scene, function(char){
                  var bone = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
                  bone.visibility = 0;
-                 newMeshes.parent  = bone;
+                 char.parent  = bone;
                 
 });
     //Import Enemy
-    BABYLON.SceneLoader.ImportMesh("","Assets/", "enemy.babylon", scene, function(newMeshes){
+    BABYLON.SceneLoader.ImportMesh("","Assets/", "enemy.babylon", scene, function(enemy){
                  var bone1 = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
                  bone1.visibility = 0;
-                 newMeshes.parent  = bone1;
-                newMeshes[0].position =new BABYLON.Vector3(10,3,10);
+                 enemy.parent  = bone1;
+               enemy[0].position =new BABYLON.Vector3(10,3,10);
                 
 });
      
-    
-              
-          //  assetsManager.onFinish = function(tasks) {
+//Applying collision
+function enableCameraCollision(camera, scene) {
+  // Enable gravity on the scene. Should be similar to earth's gravity. 
+  scene.gravity = new BABYLON.Vector3(0, -0.98, 0);
+  // Enable collisions globally. 
+  scene.collisionsEnabled = true;
+  // Enable collision detection and gravity on the free camera. 
+  camera.checkCollisions = true;
+  camera.applyGravity = true;
+  // Set the player size, the camera's ellipsoid. 
+  camera.ellipsoid = new BABYLON.Vector3(0.4, 0.8, 0.4);
+    //Collisions on ground,main character and enemy
+    ground.checkCollisions = true;
+    char.checkCollisions = true;
+    enemy.checkCollisions = true;
+}
 
     engine.runRenderLoop(function() {
         scene.render();
