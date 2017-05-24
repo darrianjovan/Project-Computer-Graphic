@@ -41,16 +41,47 @@ if (!BABYLON.Engine.isSupported()) {
               matGround.diffuseTexture=new BABYLON.Texture("grass.jpg",scene);
               ground.material=matGround;
     
+    //creation of wall
+     var wall1 = {
+    width: 100,
+    height: 50,
+    depth: 5,
+    
+  };
+    
+    var wall2 = {
+    width: 5,
+    height: 50,
+    depth: 100,
+    
+  };
+    
+    var box1=BABYLON.MeshBuilder.CreateBox("box0",wall1,scene);
+   box1.position.z=50;
+   box1.visibility=0;
+    
+    var box2=BABYLON.MeshBuilder.CreateBox("box2",wall1,scene);
+   box2.position.z=-50;
+   box2.visibility=0; 
+    
+   var box3=BABYLON.MeshBuilder.CreateBox("box3",wall2,scene);
+   box3.position.x=50;
+   box3.visibility=0;
+    
+     var box4=BABYLON.MeshBuilder.CreateBox("box4",wall2,scene);
+   box4.position.x=-50;
+    box4.visibility=0;
+    
+    
     //Import Main Character
     BABYLON.SceneLoader.ImportMesh("","Assets/", "char.babylon", scene, function(char){
-                 var bone = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
-                 bone.visibility = 0;
-                 char.parent  = bone;
-                
+     var bone = BABYLON.Mesh.CreateBox("box1",2,scene);
+     bone.visibility = 0;
+     char.parent  = bone;
 });
     //Import Enemy
     BABYLON.SceneLoader.ImportMesh("","Assets/", "enemy.babylon", scene, function(enemy){
-                 var bone1 = BABYLON.MeshBuilder.CreateBox("box1",2,scene);
+                 var bone1 = BABYLON.MeshBuilder.CreateBox("bone1",2,scene);
                  bone1.visibility = 0;
                  enemy.parent  = bone1;
                enemy[0].position =new BABYLON.Vector3(10,3,10);
@@ -79,9 +110,7 @@ function enableCameraCollision(camera, scene) {
     });
 
           
-   
-     assetsManager.load(); 
-
+  
     }
     
 
